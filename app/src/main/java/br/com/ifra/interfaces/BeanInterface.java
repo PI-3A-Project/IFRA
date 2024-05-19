@@ -1,4 +1,4 @@
-package br.com.ifra.arquitetura;
+package br.com.ifra.interfaces;
 
 public interface BeanInterface {
 }

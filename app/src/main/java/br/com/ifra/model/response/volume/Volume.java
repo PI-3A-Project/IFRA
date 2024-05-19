@@ -1,14 +1,13 @@
-package br.com.ifra.ws.bean.volume;
+package br.com.ifra.model.response.volume;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import br.com.ifra.arquitetura.BeanAbstrato;
-import br.com.ifra.ws.bean.volume.modelo.IsbnBean;
+import br.com.ifra.abstratos.BeanAbstrato;
 
-public class VolumeBean extends BeanAbstrato {
+public class Volume extends BeanAbstrato {
     @SerializedName(value = "titulo", alternate = {"title"})
     @Expose
     private String titulo;
@@ -35,7 +34,7 @@ public class VolumeBean extends BeanAbstrato {
 
     @SerializedName(value = "identificador", alternate = {"industryIdentifiers"})
     @Expose
-    private List<IsbnBean> identificador;
+    private List<Isbn> identificador;
 
     @SerializedName(value = "lingua", alternate = {"language"})
     @Expose
@@ -89,11 +88,11 @@ public class VolumeBean extends BeanAbstrato {
         this.dataPublicacao = dataPublicacao;
     }
 
-    public List<IsbnBean> getIdentificador() {
+    public List<Isbn> getIdentificador() {
         return identificador;
     }
 
-    public void setIdentificador(List<IsbnBean> identificador) {
+    public void setIdentificador(List<Isbn> identificador) {
         this.identificador = identificador;
     }
 

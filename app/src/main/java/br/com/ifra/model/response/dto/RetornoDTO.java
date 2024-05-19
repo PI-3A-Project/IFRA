@@ -1,10 +1,10 @@
-package br.com.ifra.arquitetura;
+package br.com.ifra.model.response.dto;
 
-import br.com.ifra.ws.bean.erro.ErroBean;
+import br.com.ifra.model.erro.Error;
 
 public class RetornoDTO<T extends Object> {
     private T retorno;
-    private ErroBean erro;
+    private Error erro;
     private boolean sucesso;
 
     public T getRetorno() {
@@ -15,11 +15,11 @@ public class RetornoDTO<T extends Object> {
         this.retorno = retorno;
     }
 
-    public ErroBean getErro() {
+    public Error getErro() {
         return erro;
     }
 
-    public void setErro(ErroBean erro) {
+    public void setErro(Error erro) {
         this.erro = erro;
     }
 

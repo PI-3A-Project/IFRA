@@ -1,9 +1,9 @@
-package br.com.ifra.ws.bean.volume.modelo;
+package br.com.ifra.model.response.volume;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class IsbnBean {
+public class Isbn {
     @SerializedName(value = "tipo", alternate = {"type"})
     @Expose
     private String tipo;

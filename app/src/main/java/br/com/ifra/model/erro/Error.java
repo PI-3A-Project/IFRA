@@ -1,16 +1,16 @@
-package br.com.ifra.ws.bean.erro;
+package br.com.ifra.model.erro;
 
 import java.util.List;
 
-import br.com.ifra.arquitetura.BeanAbstrato;
-import br.com.ifra.arquitetura.enums.ErroEnum;
+import br.com.ifra.abstratos.BeanAbstrato;
+import br.com.ifra.enums.ErroEnum;
 
-public class ErroBean extends BeanAbstrato {
+public class Error extends BeanAbstrato {
     private ErroEnum tipoErro;
     private String mensagem;
-    private List<ErroBean> subErros;
+    private List<Error> subErros;
 
-    private ErroBean(Builder builder) {
+    private Error(Builder builder) {
         this.tipoErro = builder.tipoErro;
         this.mensagem = builder.mensagem;
         this.subErros = builder.subErros;
@@ -19,12 +19,12 @@ public class ErroBean extends BeanAbstrato {
     public static class Builder {
         private ErroEnum tipoErro;
         private String mensagem;
-        private List<ErroBean> subErros;
+        private List<Error> subErros;
 
         public Builder() {
         }
 
-        public Builder(ErroEnum tipoErro, String mensagem, List<ErroBean> subErros) {
+        public Builder(ErroEnum tipoErro, String mensagem, List<Error> subErros) {
             this.tipoErro = tipoErro;
             this.mensagem = mensagem;
             this.subErros = subErros;
@@ -40,18 +40,18 @@ public class ErroBean extends BeanAbstrato {
             return this;
         }
 
-        public Builder subErros(List<ErroBean> subErros) {
+        public Builder subErros(List<Error> subErros) {
             this.subErros.addAll(subErros);
             return this;
         }
 
-        public Builder erro(ErroBean subErro) {
+        public Builder erro(Error subErro) {
             this.subErros.add(subErro);
             return this;
         }
 
-        public ErroBean build() {
-            return new ErroBean(this);
+        public Error build() {
+            return new Error(this);
         }
     }
 
@@ -71,11 +71,11 @@ public class ErroBean extends BeanAbstrato {
         this.mensagem = mensagem;
     }
 
-    public List<ErroBean> getSubErros() {
+    public List<Error> getSubErros() {
         return subErros;
     }
 
-    public void setSubErros(List<ErroBean> subErros) {
+    public void setSubErros(List<Error> subErros) {
         this.subErros = subErros;
     }
 }
