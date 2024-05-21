@@ -1,10 +1,10 @@
-package br.com.ifra.model.response.dto;
+package br.com.ifra.data.model.dto;
 
-import br.com.ifra.model.erro.Error;
+import br.com.ifra.data.model.dto.erro.ErrorDTO;
 
-public class RetornoDTO<T extends Object> {
+public class ReturnDTO<T extends Object> {
     private T retorno;
-    private Error erro;
+    private ErrorDTO erro;
     private boolean sucesso;
 
     public T getRetorno() {
@@ -15,11 +15,11 @@ public class RetornoDTO<T extends Object> {
         this.retorno = retorno;
     }
 
-    public Error getErro() {
+    public ErrorDTO getErro() {
         return erro;
     }
 
-    public void setErro(Error erro) {
+    public void setErro(ErrorDTO erro) {
         this.erro = erro;
     }
 

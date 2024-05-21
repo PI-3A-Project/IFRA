@@ -1,42 +1,42 @@
-package br.com.ifra.model.response.volume;
+package br.com.ifra.data.model.dto.volume;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import br.com.ifra.abstratos.BeanAbstrato;
+import br.com.ifra.base.BeanAbstrato;
 
-public class Volume extends BeanAbstrato {
-    @SerializedName(value = "titulo", alternate = {"title"})
+public class VolumeDTO extends BeanAbstrato {
+    @SerializedName(value = "titulo", alternate = {"volumeInfo.title"})
     @Expose
     private String titulo;
 
-    @SerializedName(value = "subTitulo", alternate = {"subtitle"})
+    @SerializedName(value = "subTitulo", alternate = {"volumeInfo.subtitle"})
     @Expose
     private String subTitulo;
 
-    @SerializedName(value = "autores", alternate = {"authors"})
+    @SerializedName(value = "autores", alternate = {"volumeInfo.authors"})
     @Expose
     private List<String> autores;
 
-    @SerializedName(value = "descricao", alternate = {"description"})
-    @Expose
-    private String descricao;
-
-    @SerializedName(value = "editora", alternate = {"publisher"})
+    @SerializedName(value = "editora", alternate = {"volumeInfo.publisher"})
     @Expose
     private String editora;
 
-    @SerializedName(value = "dataPublicacao", alternate = {"publishedDate"})
+    @SerializedName(value = "dataPublicacao", alternate = {"volumeInfo.publishedDate"})
     @Expose
     private String dataPublicacao;
 
-    @SerializedName(value = "identificador", alternate = {"industryIdentifiers"})
+    @SerializedName(value = "descricao", alternate = {"volumeInfo.description"})
     @Expose
-    private List<Isbn> identificador;
+    private String descricao;
 
-    @SerializedName(value = "lingua", alternate = {"language"})
+    @SerializedName(value = "identificador", alternate = {"volumeInfo.industryIdentifiers"})
+    @Expose
+    private List<IsbnDTO> identificador;
+
+    @SerializedName(value = "lingua", alternate = {"volumeInfo.language"})
     @Expose
     private String lingua;
 
@@ -88,11 +88,11 @@ public class Volume extends BeanAbstrato {
         this.dataPublicacao = dataPublicacao;
     }
 
-    public List<Isbn> getIdentificador() {
+    public List<IsbnDTO> getIdentificador() {
         return identificador;
     }
 
-    public void setIdentificador(List<Isbn> identificador) {
+    public void setIdentificador(List<IsbnDTO> identificador) {
         this.identificador = identificador;
     }
 

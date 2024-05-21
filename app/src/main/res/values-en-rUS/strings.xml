@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">IFRA</string>
+    <string name="buscar">Search</string>
+    <string name="btnConfig">Configuration</string>
+    <string name="abertura">Welcome</string>
+</resources>

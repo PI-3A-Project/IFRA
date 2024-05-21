@@ -1,6 +1,5 @@
-package br.com.ifra.api.gson;
+package br.com.ifra.data.serializer;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -11,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 
-public class GsonDeserializer<T> implements JsonDeserializer<T> {
+public class GsonCustomDeserializer<T> implements JsonDeserializer<T> {
 
     @Override
     public T deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {

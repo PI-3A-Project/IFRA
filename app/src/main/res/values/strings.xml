@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">IFRA</string>
     <string name="buscar">Buscar</string>
+    <string name="btnConfig">Configuracao</string>
+    <string name="abertura">Bem vindo</string>
+
+    <string-array name="lista_idiomas">
+        <item>Portugues</item>
+        <item>Inglês</item>
+    </string-array>
 </resources>

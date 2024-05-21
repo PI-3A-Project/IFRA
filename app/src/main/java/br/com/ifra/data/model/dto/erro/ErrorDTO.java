@@ -1,16 +1,16 @@
-package br.com.ifra.model.erro;
+package br.com.ifra.data.model.dto.erro;
 
 import java.util.List;
 
-import br.com.ifra.abstratos.BeanAbstrato;
+import br.com.ifra.base.BeanAbstrato;
 import br.com.ifra.enums.ErroEnum;
 
-public class Error extends BeanAbstrato {
+public class ErrorDTO extends BeanAbstrato {
     private ErroEnum tipoErro;
     private String mensagem;
-    private List<Error> subErros;
+    private List<ErrorDTO> subErros;
 
-    private Error(Builder builder) {
+    private ErrorDTO(Builder builder) {
         this.tipoErro = builder.tipoErro;
         this.mensagem = builder.mensagem;
         this.subErros = builder.subErros;
@@ -19,12 +19,12 @@ public class Error extends BeanAbstrato {
     public static class Builder {
         private ErroEnum tipoErro;
         private String mensagem;
-        private List<Error> subErros;
+        private List<ErrorDTO> subErros;
 
         public Builder() {
         }
 
-        public Builder(ErroEnum tipoErro, String mensagem, List<Error> subErros) {
+        public Builder(ErroEnum tipoErro, String mensagem, List<ErrorDTO> subErros) {
             this.tipoErro = tipoErro;
             this.mensagem = mensagem;
             this.subErros = subErros;
@@ -40,18 +40,18 @@ public class Error extends BeanAbstrato {
             return this;
         }
 
-        public Builder subErros(List<Error> subErros) {
+        public Builder subErros(List<ErrorDTO> subErros) {
             this.subErros.addAll(subErros);
             return this;
         }
 
-        public Builder erro(Error subErro) {
+        public Builder subErro(ErrorDTO subErro) {
             this.subErros.add(subErro);
             return this;
         }
 
-        public Error build() {
-            return new Error(this);
+        public ErrorDTO build() {
+            return new ErrorDTO(this);
         }
     }
 
@@ -71,11 +71,11 @@ public class Error extends BeanAbstrato {
         this.mensagem = mensagem;
     }
 
-    public List<Error> getSubErros() {
+    public List<ErrorDTO> getSubErros() {
         return subErros;
     }
 
-    public void setSubErros(List<Error> subErros) {
+    public void setSubErros(List<ErrorDTO> subErros) {
         this.subErros = subErros;
     }
 }
