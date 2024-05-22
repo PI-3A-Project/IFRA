@@ -1,51 +1,55 @@
 package br.com.ifra;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.color.DynamicColors;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btConfig;
+    private BottomNavigationView bottomNavigationView;
+    private FrameLayout frameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //changeLanguage(, Idiomas.Portugues);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+        DynamicColors.applyToActivitiesIfAvailable(this.getApplication(), R.style.Theme_IFRA);
 
-        btConfig = findViewById(R.id.bt_config);
-        btConfig.setOnClickListener(view -> {
-            Intent navegar_config = new Intent(this, ConfigurationActivity.class);
-            startActivity(navegar_config);
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        frameLayout = findViewById(R.id.frameLayout);
+
+        // Definir o fragmento inicial
+        getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new SearchFragment()).commit();
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.search){
+                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new SearchFragment()).commit();
+                //Toast.makeText(MainActivity.this, "Pesquisar clicado", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+            else if (itemId == R.id.books){
+                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new BooksFragment()).commit();
+                //Toast.makeText(MainActivity.this, "Livros clicado", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+            return false;
         });
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+        bottomNavigationView.setOnNavigationItemReselectedListener(item -> {
+            // Nada a fazer aqui
+        });
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.frameLayout), (v, insets) -> {
+            v.setPadding(0, 0, 0, insets.getSystemWindowInsetBottom());
+            return insets.consumeSystemWindowInsets();
         });
     }
-    /*
-    private void changeLanguage(Activity activity, Idiomas idioma) {
-        Locale locale = new Locale(idioma.getValue()[0], idioma.getValue()[1]);
-        Locale.setDefault(locale);
-        Resources resources = activity.getResources();
-        Configuration config = resources.getConfiguration();
-        config.setLocale(locale);
-
-        MessageUtil.setLocale(locale);
-
-        // Recriar a Activity para aplicar a nova configuração de linguagem
-        Intent intent = getIntent();
-        finish();
-        startActivity(intent);
-    }*/
 }
+
