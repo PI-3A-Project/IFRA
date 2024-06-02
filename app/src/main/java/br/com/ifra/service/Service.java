@@ -1,5 +1,7 @@
 package br.com.ifra.service;
 
+import android.os.AsyncTask;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -18,14 +20,14 @@ import br.com.ifra.enums.Metodo;
 import br.com.ifra.exceptions.HttpMethodException;
 import br.com.ifra.utils.MessageUtil;
 
-public class Service {
+public class Service extends AsyncTask<String, Void, String> {
 
     private static Locale locale;
     private static final String baseUrl = "https://www.googleapis.com/books/v1/";
-    public ReturnDTO<ListVolumeDTO> buscarVolume(String search) {
+    public static ReturnDTO<ListVolumeDTO> buscarVolume(String search) {
         ReturnDTO<ListVolumeDTO> retorno = new ReturnDTO<>();
         String url = baseUrl + "volumes";
-        String filter = "?{"+ search +"}";
+        String filter = "?q={"+ search +"}";
         url += filter;
         try {
             String response = HttpMethods.executar(null, url, Metodo.GET, criarHeader());
@@ -51,9 +53,14 @@ public class Service {
         return retorno;
     }
 
-    public List<String[]> criarHeader() {
+    public static List<String[]> criarHeader() {
         List<String[]> header = new ArrayList<>();
         //header.add(new String[]{"", ""});
         return header;
+    }
+
+    @Override
+    protected String doInBackground(String... strings) {
+        return null;
     }
 }

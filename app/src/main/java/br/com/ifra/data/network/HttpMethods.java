@@ -1,5 +1,8 @@
 package br.com.ifra.data.network;
 
+import android.os.AsyncTask;
+import android.util.Log;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -13,7 +16,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class HttpMethods {
+public class HttpMethods extends AsyncTask<String, Void, String> {
     /**
      *
      * @param json
@@ -24,13 +27,13 @@ public class HttpMethods {
      * @throws IOException
      * @throws HttpMethodException
      */
-    public static String executar(String json, String url, Metodo metodo, List<String[]> headers) throws IOException, HttpMethodException {
+    public static String executar(String json, String url, Metodo metodo, List<String[]> headers)  throws IOException, HttpMethodException {
         OkHttpClient client = new OkHttpClient();
 
-        MediaType JSON = MediaType.get("application/json");
-        RequestBody body = null;
 
+        RequestBody body = null;
         if(json != null && !json.isEmpty()) {
+            MediaType JSON = MediaType.get("application/json");
             RequestBody.create(json, JSON);
         }
 
@@ -60,8 +63,16 @@ public class HttpMethods {
             } else {
                 throw new HttpMethodException(ErroEnum.RESPONSE);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
+            String mensagem = e.getMessage();
+            Log.d("Erro HTTP", e.getMessage());
+            e.printStackTrace();
             throw new IOException(MessageUtil.getMessage(ErroEnum.API.getValue()));
         }
+    }
+
+    @Override
+    protected String doInBackground(String... strings) {
+        return null;
     }
 }
