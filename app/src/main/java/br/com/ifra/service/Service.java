@@ -1,24 +1,31 @@
 package br.com.ifra.service;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParseException;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 
 import br.com.ifra.data.model.dto.ReturnDTO;
 import br.com.ifra.data.model.dto.erro.ErrorDTO;
 import br.com.ifra.data.model.dto.volume.ListVolumeDTO;
-import br.com.ifra.data.network.HttpMethods;
 import br.com.ifra.data.serializer.GsonCustomDeserializer;
 import br.com.ifra.enums.ErroEnum;
 import br.com.ifra.enums.Metodo;
 import br.com.ifra.exceptions.HttpMethodException;
 import br.com.ifra.utils.MessageUtil;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class Service extends AsyncTask<String, Void, String> {
 
@@ -30,24 +37,25 @@ public class Service extends AsyncTask<String, Void, String> {
         String filter = "?q={"+ search +"}";
         url += filter;
         try {
-            String response = HttpMethods.executar(null, url, Metodo.GET, criarHeader());
+            String response = new HttpService(url, null, null, Metodo.GET).execute().get();;
 
-            Gson gson = new GsonBuilder().registerTypeAdapter(ListVolumeDTO.class, new GsonCustomDeserializer<>()).create();
-
+            /*Ignorar esse GsonCustomDeserializer, utilizar a transformação do gson normal, para isso é necessário alterar o DTO,
+                as annotations não são necessárias e a estrutura do DTO tem que ficar igual a do json, não é necessário ter todos os campos,
+                só os que precisamos*/
+            //Gson gson = new GsonBuilder().registerTypeAdapter(ListVolumeDTO.class, new GsonCustomDeserializer<>()).create();
+            Gson gson = new Gson();
             ListVolumeDTO listaVolume = gson.fromJson(response, ListVolumeDTO.class);
             retorno.setRetorno(listaVolume);
             retorno.setSucesso(true);
-        } catch(IOException e) {
-            retorno.setErro(
-                    new ErrorDTO.Builder()
-                    .tipoErro(ErroEnum.API)
-                    .mensagem(MessageUtil.getMessage(ErroEnum.API.getValue()))
-                    .build());
-        } catch(HttpMethodException e) {
-            retorno.setErro(
-                    new ErrorDTO.Builder().tipoErro(e.getTipoErro())
-                    .mensagem(e.getMessage())
-                    .build());
+        } catch (ExecutionException e) {
+            String erro = e.getMessage();
+            return null;
+        } catch (InterruptedException e) {
+            String erro = e.getMessage();
+            return null;
+        } catch (Exception e) {
+            String erro = e.getMessage();
+            return null;
         }
 
         return retorno;

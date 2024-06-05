@@ -16,9 +16,7 @@
 
 package br.com.ifra.search;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,7 +24,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
@@ -48,9 +45,9 @@ import br.com.ifra.R;
 import br.com.ifra.service.Service;
 
 /** Provides utility methods for the search demo. */
-public final class SearchDemoUtils {
+public final class SearchUtils {
 
-  private SearchDemoUtils() {}
+  private SearchUtils() {}
 
   public static void setUpSearchBar(@NonNull Activity activity, @NonNull SearchBar searchBar) {
     searchBar.inflateMenu(R.menu.cat_searchbar_menu);
@@ -61,7 +58,6 @@ public final class SearchDemoUtils {
         });
   }
 
-  @SuppressLint("NewApi")
   public static void setUpSearchView(@NonNull ViewGroup suggestionContainer,
       @NonNull AppCompatActivity activity,
       @NonNull SearchBar searchBar,
