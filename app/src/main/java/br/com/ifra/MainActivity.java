@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         SearchUtils.setUpSuggestions(suggestionContainer, searchBar, searchView);
         SearchUtils.startOnLoadAnimation(searchBar, savedInstanceState);
 
-        DynamicColors.applyToActivitiesIfAvailable(this.getApplication(), R.style.Theme_IFRA);
+        DynamicColors.applyToActivitiesIfAvailable(this.getApplication(), R.style.AppTheme);
     }
 }
 
