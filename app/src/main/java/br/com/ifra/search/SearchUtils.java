@@ -52,46 +52,46 @@ public final class SearchUtils {
   public static void setUpSearchBar(@NonNull Activity activity, @NonNull SearchBar searchBar) {
     searchBar.inflateMenu(R.menu.cat_searchbar_menu);
     searchBar.setOnMenuItemClickListener(
-        menuItem -> {
-          showSnackbar(activity, menuItem);
-          return true;
-        });
+            menuItem -> {
+              showSnackbar(activity, menuItem);
+              return true;
+            });
   }
 
   public static void setUpSearchView(@NonNull ViewGroup suggestionContainer,
-      @NonNull AppCompatActivity activity,
-      @NonNull SearchBar searchBar,
-      @NonNull SearchView searchView) {
+                                     @NonNull AppCompatActivity activity,
+                                     @NonNull SearchBar searchBar,
+                                     @NonNull SearchView searchView) {
     searchView.inflateMenu(R.menu.cat_searchview_menu);
     searchView.setOnMenuItemClickListener(
-        menuItem -> {
-          showSnackbar(activity, menuItem);
-          return true;
-        });
-    searchView
-        .getEditText()
-        .setOnEditorActionListener(
-            (v, actionId, event) -> {
-              submitSearchQuery(suggestionContainer, searchBar, searchView, searchView.getText().toString());
-              return false;
+            menuItem -> {
+              showSnackbar(activity, menuItem);
+              return true;
             });
+    searchView
+            .getEditText()
+            .setOnEditorActionListener(
+                    (v, actionId, event) -> {
+                      submitSearchQuery(suggestionContainer, searchBar, searchView, searchView.getText().toString());
+                      return false;
+                    });
     OnBackPressedCallback onBackPressedCallback =
-        new OnBackPressedCallback(/* enabled= */ false) {
-          @Override
-          public void handleOnBackPressed() {
-            searchView.hide();
-          }
-        };
+            new OnBackPressedCallback(/* enabled= */ false) {
+              @Override
+              public void handleOnBackPressed() {
+                searchView.hide();
+              }
+            };
     activity.getOnBackPressedDispatcher().addCallback(activity, onBackPressedCallback);
     searchView.addTransitionListener(
-        (searchView1, previousState, newState) ->
-            onBackPressedCallback.setEnabled(newState == TransitionState.SHOWN));
+            (searchView1, previousState, newState) ->
+                    onBackPressedCallback.setEnabled(newState == TransitionState.SHOWN));
   }
 
   public static void showSnackbar(@NonNull Activity activity, @NonNull MenuItem menuItem) {
     Snackbar.make(
-            activity.findViewById(android.R.id.content), menuItem.getTitle(), Snackbar.LENGTH_SHORT)
-        .show();
+                    activity.findViewById(android.R.id.content), menuItem.getTitle(), Snackbar.LENGTH_SHORT)
+            .show();
   }
 
   public static void startOnLoadAnimation(@NonNull SearchBar searchBar, @Nullable Bundle bundle) {
@@ -102,20 +102,24 @@ public final class SearchUtils {
   }
 
   public static void setUpSuggestions(
-      @NonNull ViewGroup suggestionContainer,
-      @NonNull SearchBar searchBar,
-      @NonNull SearchView searchView) {
+          @NonNull ViewGroup suggestionContainer,
+          @NonNull SearchBar searchBar,
+          @NonNull SearchView searchView) {
 
-    addSuggestionTitleView(
-        suggestionContainer, R.string.cat_searchview_suggestion_section_title);
-    addSuggestionItemViews(suggestionContainer, new ArrayList<>(), searchBar, searchView);
+    List<SuggestionItem> suggestionItems = new ArrayList<>();
+    // Adicione itens à lista suggestionItems aqui, se necessário
+
+    if (!suggestionItems.isEmpty()) {
+      addSuggestionTitleView(suggestionContainer, R.string.cat_searchview_suggestion_section_title);
+      addSuggestionItemViews(suggestionContainer, suggestionItems, searchBar, searchView);
+    }
   }
 
   private static void addSuggestionTitleView(ViewGroup parent, @StringRes int titleResId) {
     TextView titleView =
-        (TextView)
-            LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.cat_search_suggestion_title, parent, false);
+            (TextView)
+                    LayoutInflater.from(parent.getContext())
+                            .inflate(R.layout.cat_search_suggestion_title, parent, false);
 
     titleView.setText(titleResId);
 
@@ -123,20 +127,20 @@ public final class SearchUtils {
   }
 
   private static void addSuggestionItemViews(
-      ViewGroup parent,
-      List<SuggestionItem> suggestionItems,
-      SearchBar searchBar,
-      SearchView searchView) {
+          ViewGroup parent,
+          List<SuggestionItem> suggestionItems,
+          SearchBar searchBar,
+          SearchView searchView) {
     for (SuggestionItem suggestionItem : suggestionItems) {
       addSuggestionItemView(parent, suggestionItem, searchBar, searchView);
     }
   }
 
   private static void addSuggestionItemView(
-      ViewGroup parent, SuggestionItem suggestionItem, SearchBar searchBar, SearchView searchView) {
+          ViewGroup parent, SuggestionItem suggestionItem, SearchBar searchBar, SearchView searchView) {
     View view =
-        LayoutInflater.from(parent.getContext())
-            .inflate(R.layout.cat_search_suggestion_item, parent, false);
+            LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.cat_search_suggestion_item, parent, false);
 
     List<String> recentes = printSuggestionItemValues(parent);
     if(recentes.contains(suggestionItem.title)){
@@ -182,6 +186,11 @@ public final class SearchUtils {
   private static void submitSearchQuery(ViewGroup suggestionContainer, SearchBar searchBar, SearchView searchView, String query) {
 
     Service.buscarVolume(query);
+
+    // Verifica se é a primeira sugestão a ser adicionada
+    if (printSuggestionItemValues(suggestionContainer).isEmpty()) {
+      addSuggestionTitleView(suggestionContainer, R.string.cat_searchview_suggestion_section_title);
+    }
 
     SuggestionItem suggestionItems =
             new SuggestionItem(

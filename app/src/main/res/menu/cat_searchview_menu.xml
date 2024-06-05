@@ -18,10 +18,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="AppCompatResource">
-  <item
-      android:id="@+id/action_mic"
-      android:icon="@drawable/ic_mic_vd_theme_24"
-      android:title="@string/cat_searchview_menu_mic_title"
-      app:showAsAction="always"
-      tools:ignore="AlwaysShowAction"/>
-</menu>
+  <!--  <item
+        android:id="@+id/action_mic"
+        android:icon="@drawable/ic_mic_vd_theme_24"
+        android:title="@string/cat_searchview_menu_mic_title"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction"/>
+          -->
+  </menu>

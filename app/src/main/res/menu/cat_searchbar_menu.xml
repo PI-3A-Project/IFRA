@@ -18,13 +18,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="AppCompatResource">
-  <item
-      android:id="@+id/action_cast"
-      android:icon="@drawable/ic_cast_vd_theme_24"
-      android:title="@string/cat_searchbar_menu_cast_title"
-      app:showAsAction="ifRoom"/>
-  <item
-      android:id="@+id/action_settings"
-      android:title="@string/cat_searchbar_menu_settings_title"
-      app:showAsAction="never"/>
-</menu>
+  <!--  <item
+        android:id="@+id/action_cast"
+        android:icon="@drawable/ic_cast_vd_theme_24"
+        android:title="@string/cat_searchbar_menu_cast_title"
+        app:showAsAction="ifRoom"/>  -->
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/cat_searchbar_menu_settings_title"
+        app:showAsAction="never"/>
+  </menu>
