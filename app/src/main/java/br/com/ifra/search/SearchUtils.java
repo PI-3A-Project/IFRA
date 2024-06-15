@@ -57,6 +57,12 @@ public final class SearchUtils {
     private SearchUtils() {
     }
 
+    public static void setStatusBarColor(Activity activity, int color) {
+        if (activity.getWindow() != null) {
+            activity.getWindow().setStatusBarColor(color);
+        }
+    }
+
     public static void setUpSearchBar(@NonNull Activity activity, @NonNull SearchBar searchBar) {
         searchBar.inflateMenu(R.menu.cat_searchbar_menu);
         searchBar.setOnMenuItemClickListener(
@@ -92,8 +98,17 @@ public final class SearchUtils {
                 };
         activity.getOnBackPressedDispatcher().addCallback(activity, onBackPressedCallback);
         searchView.addTransitionListener(
-                (searchView1, previousState, newState) ->
-                        onBackPressedCallback.setEnabled(newState == TransitionState.SHOWN));
+                (searchView1, previousState, newState) -> {
+                    onBackPressedCallback.setEnabled(newState == TransitionState.SHOWN);
+                    if (newState == TransitionState.SHOWN) {
+                        // Change status bar color to match suggestion container
+                        setStatusBarColor(activity, activity.getResources().getColor(R.color.md_theme_surfaceContainerHigh_highContrast));
+                    } else if (newState == TransitionState.HIDDEN) {
+                        // Revert status bar color to original
+                        int suggestionContainerColor = suggestionContainer.getSolidColor();
+                        setStatusBarColor(activity, suggestionContainerColor);
+                    }
+                });
     }
 
     public static void showSnackbar(@NonNull Activity activity, @NonNull MenuItem menuItem) {
