@@ -114,8 +114,8 @@ public final class SearchUtils {
             @NonNull SearchBar searchBar,
             @NonNull SearchView searchView) {
 
-        addSuggestionTitleView(
-                suggestionContainer, R.string.cat_searchview_suggestion_section_title);
+//        addSuggestionTitleView(
+//                suggestionContainer, R.string.cat_searchview_suggestion_section_title);
         addSuggestionItemViews(suggestionContainer, new ArrayList<>(), searchBar, searchView);
     }
 
@@ -161,6 +161,11 @@ public final class SearchUtils {
 
         if (parent.getChildCount() > 5) {
             parent.removeViewAt(parent.getChildCount() - 1);
+        }
+
+        // Verifica se é a primeira sugestão a ser adicionada
+        if (printSuggestionItemValues(parent).isEmpty()) {
+            addSuggestionTitleView(parent, R.string.cat_searchview_suggestion_section_title);
         }
         parent.addView(view, 1);
     }
