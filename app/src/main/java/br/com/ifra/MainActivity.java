@@ -8,9 +8,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.color.DynamicColors;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.search.SearchBar;
 import com.google.android.material.search.SearchView;
 
+import br.com.ifra.search.ProgressoBusca;
 import br.com.ifra.search.SearchUtils;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.cat_search_fragment);
 
+        CircularProgressIndicator progressIndicator = findViewById(R.id.circular_indicator);
+        ProgressoBusca.setProgressIndicator(progressIndicator);
 
         SearchBar searchBar = findViewById(R.id.cat_search_bar);
         SearchView searchView = findViewById(R.id.cat_search_view);

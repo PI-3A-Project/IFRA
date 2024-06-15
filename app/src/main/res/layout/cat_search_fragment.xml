@@ -20,22 +20,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+  <com.google.android.material.progressindicator.CircularProgressIndicator
+      android:id="@+id/circular_indicator"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:visibility="gone"
+      android:indeterminate="true" />
+
   <androidx.core.widget.NestedScrollView
       android:id="@+id/nested_scroll_view"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       app:layout_behavior="@string/searchbar_scrolling_view_behavior">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="88dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:fitsSystemWindows="true"
-        android:lineSpacingMultiplier="1.2"
-        android:text="@string/cat_searchbar_lorem_ipsum"/>
   </androidx.core.widget.NestedScrollView>
 
   <com.google.android.material.appbar.AppBarLayout

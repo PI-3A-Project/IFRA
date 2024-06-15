@@ -69,8 +69,6 @@ public class SearchFragment extends Fragment {
         LinearLayout suggestionContainer = view.findViewById(R.id.cat_search_view_suggestion_container);
 
         SearchUtils.setUpSearchBar(requireActivity(), searchBar);
-        SearchUtils.setUpSearchView(suggestionContainer, (AppCompatActivity) requireActivity(), searchBar, searchView);
-        SearchUtils.setUpSuggestions(suggestionContainer, searchBar, searchView);
         SearchUtils.startOnLoadAnimation(searchBar, savedInstanceState);
 
         return view;
