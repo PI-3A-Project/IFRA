@@ -216,8 +216,8 @@ public class SelectableCardsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         public Item(String title, String autor, String isbn_10, String isbn_13, String imagemUrl) {
             this.title = title;
             this.autor = autor;
-            this.isbn_10 = ("ISBN-10:" + isbn_10);
-            this.isbn_13 = ("ISBN-13:" + isbn_13);
+            this.isbn_10 = ("ISBN-10 : " + (isbn_10 != null ? isbn_10 : "---"));
+            this.isbn_13 = ("ISBN-13 : " + (isbn_13 != null ? isbn_13 : "---"));
             this.imagemUrl = imagemUrl;
         }
     }

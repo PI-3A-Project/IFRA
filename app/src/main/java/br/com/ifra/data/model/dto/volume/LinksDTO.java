@@ -9,15 +9,27 @@ import br.com.ifra.data.adapter.FlatteningAdapterFactory;
 @JsonAdapter(FlatteningAdapterFactory.class)
 public class LinksDTO {
 
-    @SerializedName(value = "imagemLink", alternate = {"smallThumbnail"})
+    @SerializedName(value = "urlCapaPequena", alternate = {"smallThumbnail"})
     @Expose
-    private String imagemLink;
+    private String urlCapaPequena;
 
-    public String getImagemLink() {
-        return imagemLink;
+    @SerializedName(value = "urlCapaNormal", alternate = {"thumbnail"})
+    @Expose
+    private String urlCapaNormal;
+
+    public String getUrlCapaPequena() {
+        return urlCapaPequena;
     }
 
-    public void setImagemLink(String imagemLink) {
-        this.imagemLink = imagemLink;
+    public void setUrlCapaPequena(String urlCapaPequena) {
+        this.urlCapaPequena = urlCapaPequena;
+    }
+
+    public String getUrlCapaNormal() {
+        return urlCapaNormal;
+    }
+
+    public void setUrlCapaNormal(String urlCapaNormal) {
+        this.urlCapaNormal = urlCapaNormal;
     }
 }

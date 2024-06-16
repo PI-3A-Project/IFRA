@@ -25,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,7 +35,6 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bumptech.glide.Glide;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.search.SearchBar;
 import com.google.android.material.search.SearchView;
@@ -45,7 +45,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.stream.Collectors;
 
 import br.com.ifra.R;
 import br.com.ifra.card.CardUtils;
@@ -92,7 +91,10 @@ public final class SearchUtils {
                 .getEditText()
                 .setOnEditorActionListener(
                         (v, actionId, event) -> {
-                            submitSearchQuery(suggestionContainer, searchBar, searchView, searchView.getText().toString());
+                            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                                submitSearchQuery(suggestionContainer, searchBar, searchView, searchView.getText().toString());
+                                return true;
+                            }
                             return false;
                         });
         OnBackPressedCallback onBackPressedCallback =
@@ -130,14 +132,14 @@ public final class SearchUtils {
         }
     }
 
+    private static List<SuggestionItem> suggestionItems;
+
     public static void setUpSuggestions(
             @NonNull ViewGroup suggestionContainer,
             @NonNull SearchBar searchBar,
             @NonNull SearchView searchView) {
 
-//        addSuggestionTitleView(
-//                suggestionContainer, R.string.cat_searchview_suggestion_section_title);
-        addSuggestionItemViews(suggestionContainer, new ArrayList<>(), searchBar, searchView);
+        addSuggestionItemViews(suggestionContainer, searchBar, searchView);
     }
 
     private static void addSuggestionTitleView(ViewGroup parent, @StringRes int titleResId) {
@@ -153,9 +155,11 @@ public final class SearchUtils {
 
     private static void addSuggestionItemViews(
             ViewGroup parent,
-            List<SuggestionItem> suggestionItems,
             SearchBar searchBar,
             SearchView searchView) {
+        if (suggestionItems == null) {
+            suggestionItems = new ArrayList<>();
+        }
         for (SuggestionItem suggestionItem : suggestionItems) {
             addSuggestionItemView(parent, suggestionItem, searchBar, searchView);
         }
@@ -168,8 +172,13 @@ public final class SearchUtils {
                         .inflate(R.layout.cat_search_suggestion_item, parent, false);
 
         List<String> recentes = printSuggestionItemValues(parent);
+
         if (recentes.contains(suggestionItem.getTitle())) {
             return;
+        }
+
+        if (suggestionItems.stream().noneMatch(item -> item.getTitle().equals(suggestionItem.getTitle()))) {
+            suggestionItems.add(suggestionItem);
         }
 
         ImageView iconView = view.findViewById(R.id.cat_searchbar_suggestion_icon);
@@ -199,7 +208,7 @@ public final class SearchUtils {
             View child = parent.getChildAt(i);
 
             if (child != null) {
-                ImageView iconView = child.findViewById(R.id.cat_searchbar_suggestion_icon);
+//                ImageView iconView = child.findViewById(R.id.cat_searchbar_suggestion_icon);
                 TextView titleView = child.findViewById(R.id.cat_searchbar_suggestion_title);
 
                 if (titleView != null) {
@@ -234,6 +243,9 @@ public final class SearchUtils {
 
 
                     for (VolumeDTO volume : listaVolumes.getListaVolumes()) {
+                        if(volume.getIdentificador() == null) {
+                            continue;
+                        }
                         String autoresString = null;
                         if (volume.getAutores() != null) {
                             autoresString = String.join(", ", volume.getAutores());
@@ -244,8 +256,9 @@ public final class SearchUtils {
                         String isbn_10 = null;
                         String isbn_13 = null;
                         String linkImg = null;
-                        if (volume.getLinks() != null)
-                            linkImg = volume.getLinks().getImagemLink();
+                        if (volume.getLinks() != null) {
+                            linkImg = volume.getLinks().getUrlCapaPequena() != null ? volume.getLinks().getUrlCapaPequena() : volume.getLinks().getUrlCapaNormal();
+                        }
 
                         for (IsbnDTO isbn : volume.getIdentificador()) {
                             if (isbn.getTipo().equals("ISBN_10")) {

@@ -18,20 +18,23 @@ public class CardUtils {
     private static RecyclerView recyclerView;
 
     public static void setUpRecyclerView(Activity activity) {
-        adapter = new SelectableCardsAdapter();
+        if (adapter == null)
+            adapter = new SelectableCardsAdapter();
         recyclerView.setAdapter(adapter);
 
-        selectionTracker =
-                new SelectionTracker.Builder<>(
-                        "card_selection",
-                        recyclerView,
-                        new SelectableCardsAdapter.KeyProvider(adapter),
-                        new SelectableCardsAdapter.DetailsLookup(recyclerView),
-                        StorageStrategy.createLongStorage())
-                        .withSelectionPredicate(SelectionPredicates.createSelectAnything())
-                        .build();
+        if (selectionTracker == null) {
+            selectionTracker =
+                    new SelectionTracker.Builder<>(
+                            "card_selection",
+                            recyclerView,
+                            new SelectableCardsAdapter.KeyProvider(adapter),
+                            new SelectableCardsAdapter.DetailsLookup(recyclerView),
+                            StorageStrategy.createLongStorage())
+                            .withSelectionPredicate(SelectionPredicates.createSelectAnything())
+                            .build();
+            adapter.setSelectionTracker(selectionTracker);
+        }
 
-        adapter.setSelectionTracker(selectionTracker);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
     }
 
