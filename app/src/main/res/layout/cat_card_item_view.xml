@@ -28,39 +28,53 @@
         android:layout_marginTop="0dp"
         android:layout_marginRight="0dp"
         android:layout_marginBottom="0dp"
-        android:checkable="true"
+        android:checkable="false"
         android:clickable="true"
         android:focusable="true"
         app:cardCornerRadius="0dp"
-        app:contentPadding="16dp"
-        app:contentPaddingBottom="10dp"
-        app:contentPaddingTop="10dp"
+        app:contentPadding="10dp"
+        app:contentPaddingBottom="0dp"
+        app:contentPaddingTop="0dp"
         app:strokeWidth="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp">
 
-            <ImageView
-                android:id="@+id/cat_card_image"
-                android:layout_width="85dp"
-                android:layout_height="114dp"
-                android:layout_marginEnd="8dp"
-                android:scaleType="centerCrop" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card"
+                android:layout_width="106dp"
+                android:layout_height="142dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                android:layout_margin="10dp"
+                style="?attr/materialCardViewElevatedStyle">
+
+                <ImageView
+                    android:id="@+id/cat_card_image"
+                    android:layout_width="106dp"
+                    android:layout_height="142dp"
+                    android:scaleType="centerCrop"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:id="@+id/cat_card_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="3dp"
+                    android:fontFamily="@font/poppins_semibold"
                     android:text="Sistemas Operacionais com Java"
                     android:textAppearance="?attr/textAppearanceBodyLarge"
                     android:textStyle="bold" />
@@ -71,28 +85,26 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
                     android:text="Abraham Silberschatz"
-                    android:textAppearance="?attr/textAppearanceBody2" />
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:fontFamily="@font/poppins_medium"/>
 
                 <TextView
                     android:id="@+id/cat_card_isbn10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ISBN-10 : 85222222222"
-                    android:textAppearance="?attr/textAppearanceCaption" />
+                    android:textAppearance="?attr/textAppearanceCaption"
+                    android:fontFamily="@font/poppins_medium"/>/>
 
                 <TextView
                     android:id="@+id/cat_card_isbn13"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ISBN-13 : 85222222222"
-                    android:textAppearance="?attr/textAppearanceCaption" />
+                    android:textAppearance="?attr/textAppearanceCaption"
+                    android:fontFamily="@font/poppins_medium"/>
             </LinearLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.divider.MaterialDivider xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        app:dividerColor="@color/md_theme_surfaceContainerHigh" />
 
 </LinearLayout>

@@ -38,6 +38,7 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:paddingTop="@dimen/content_padding_top" />
+
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.appbar.AppBarLayout
@@ -51,7 +52,8 @@
             android:id="@+id/cat_search_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/cat_searchbar_hint" />
+            android:hint="@string/cat_searchbar_hint"
+            />
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.search.SearchView
@@ -59,7 +61,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:hint="@string/cat_searchbar_hint"
-        app:layout_anchor="@id/cat_search_bar">
+        app:layout_anchor="@id/cat_search_bar"
+        >
 
         <!-- Content goes here (ScrollView, RecyclerView, etc.). -->
         <ScrollView
