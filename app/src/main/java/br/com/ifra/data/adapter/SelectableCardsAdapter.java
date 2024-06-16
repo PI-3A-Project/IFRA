@@ -16,10 +16,13 @@
 
 package br.com.ifra.data.adapter;
 
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,8 +33,13 @@ import androidx.recyclerview.selection.ItemKeyProvider;
 import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
 import com.google.android.material.card.MaterialCardView;
 
+import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,6 +82,7 @@ public class SelectableCardsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         Item item = items.get(position);
+
         ((ItemViewHolder) viewHolder).bind(item, position);
     }
 
@@ -86,6 +95,8 @@ public class SelectableCardsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         private final Details details;
         private final MaterialCardView materialCardView;
+
+        private final ImageView imagemView;
         private final TextView titleView;
         private final TextView autoresView;
 
@@ -96,6 +107,7 @@ public class SelectableCardsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         ItemViewHolder(View itemView) {
             super(itemView);
             materialCardView = itemView.findViewById(R.id.item_card);
+            imagemView = itemView.findViewById(R.id.cat_card_image);
             titleView = itemView.findViewById(R.id.cat_card_title);
             autoresView = itemView.findViewById(R.id.cat_card_autores);
             isbn_10View = itemView.findViewById(R.id.cat_card_isbn10);
@@ -109,6 +121,13 @@ public class SelectableCardsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             autoresView.setText(item.autor);
             isbn_10View.setText(item.isbn_10);
             isbn_13View.setText(item.isbn_13);
+
+            Glide.with(itemView.getContext())
+                    .load(item.imagemUrl)
+                    .placeholder(R.drawable.baseline_call_to_action)
+                    .error(R.drawable.hide_image)
+                    .into(imagemView);
+
             if (selectionTracker != null) {
                 bindSelectedState();
             }
@@ -187,17 +206,19 @@ public class SelectableCardsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     public static class Item {
 
+        private final String imagemUrl;
         private final String title;
         private final String autor;
 
         private final String isbn_10;
         private final String isbn_13;
 
-        public Item(String title, String autor, String isbn_10, String isbn_13) {
+        public Item(String title, String autor, String isbn_10, String isbn_13, String imagemUrl) {
             this.title = title;
             this.autor = autor;
             this.isbn_10 = ("ISBN-10:" + isbn_10);
             this.isbn_13 = ("ISBN-13:" + isbn_13);
+            this.imagemUrl = imagemUrl;
         }
     }
 

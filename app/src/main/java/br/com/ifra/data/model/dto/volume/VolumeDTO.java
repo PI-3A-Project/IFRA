@@ -43,6 +43,10 @@ public class VolumeDTO extends BeanAbstrato {
     @Expose
     private String lingua;
 
+    @SerializedName(value = "links", alternate = {"volumeInfo.imageLinks"})
+    @Expose
+    private LinksDTO links;
+
     public String getTitulo() {
         return titulo;
     }
@@ -105,5 +109,13 @@ public class VolumeDTO extends BeanAbstrato {
 
     public void setLingua(String lingua) {
         this.lingua = lingua;
+    }
+
+    public LinksDTO getLinks() {
+        return links;
+    }
+
+    public void setLinks(LinksDTO links) {
+        this.links = links;
     }
 }
