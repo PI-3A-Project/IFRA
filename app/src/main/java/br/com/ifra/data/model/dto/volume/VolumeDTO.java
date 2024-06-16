@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 import br.com.ifra.base.BeanAbstrato;
-import br.com.ifra.data.serializer.FlatteningAdapterFactory;
+import br.com.ifra.data.adapter.FlatteningAdapterFactory;
 
 @JsonAdapter(FlatteningAdapterFactory.class)
 public class VolumeDTO extends BeanAbstrato {

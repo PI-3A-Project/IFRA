@@ -7,4 +7,6 @@
     <dimen name="cat_list_text_margin_from_icon">16dp</dimen>
     <dimen name="cat_list_text_margin_from_icon_large">24dp</dimen>
     <dimen name="cat_list_text_margin_from_button">16dp</dimen>
+    <dimen name="cat_card_content_padding">16dp</dimen>
+    <dimen name="content_padding_top">16dp</dimen>
 </resources>

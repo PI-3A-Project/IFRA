@@ -2,6 +2,7 @@ package br.com.ifra;
 
 import android.os.Bundle;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +14,12 @@ import br.com.ifra.R;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.color.DynamicColors;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
+import com.google.android.material.search.SearchBar;
+import com.google.android.material.search.SearchView;
+
+import br.com.ifra.search.ProgressoBusca;
+import br.com.ifra.search.SearchUtils;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package br.com.ifra.data.serializer;
+package br.com.ifra.data.adapter;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;

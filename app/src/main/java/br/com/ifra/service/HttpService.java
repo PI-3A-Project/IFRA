@@ -61,8 +61,8 @@ public class HttpService extends AsyncTask<String, Void, String> {
             // Lê a resposta da requisição
             StringBuilder resposta = new StringBuilder();
             Scanner scanner = new Scanner(urlRequest.openStream());
-            while (scanner.hasNext()) {
-                resposta.append(scanner.next());
+            while (scanner.hasNextLine()) {
+                resposta.append(scanner.nextLine()).append("\n");
             }
             scanner.close();
 

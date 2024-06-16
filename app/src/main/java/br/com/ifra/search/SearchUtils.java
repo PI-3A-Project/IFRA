@@ -44,10 +44,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 import br.com.ifra.R;
+import br.com.ifra.card.CardUtils;
+import br.com.ifra.data.adapter.SelectableCardsAdapter;
 import br.com.ifra.data.model.dto.ReturnDTO;
+import br.com.ifra.data.model.dto.volume.IsbnDTO;
 import br.com.ifra.data.model.dto.volume.ListVolumeDTO;
+import br.com.ifra.data.model.dto.volume.VolumeDTO;
 import br.com.ifra.service.Service;
 
 /**
@@ -212,17 +217,53 @@ public final class SearchUtils {
 
     private static final Handler mainHandler = new Handler(Looper.getMainLooper());
 
+    private static ListVolumeDTO listaVolumes;
+
     private static void submitSearchQuery(ViewGroup suggestionContainer, SearchBar searchBar, SearchView searchView, String query) {
         searchBar.setText(query);
         searchView.hide();
         ProgressoBusca.visivel();
         executorService.execute(() -> {
-            executeInBackground(suggestionContainer, searchBar, searchView, query);
+            listaVolumes = executeInBackground(suggestionContainer, searchBar, searchView, query);
             ProgressoBusca.gone();
+
+            mainHandler.post(() -> {
+                if (listaVolumes != null && listaVolumes.getListaVolumes() != null && !listaVolumes.getListaVolumes().isEmpty()) {
+
+                    List<SelectableCardsAdapter.Item> items = new ArrayList<>();
+
+
+                    for (VolumeDTO volume : listaVolumes.getListaVolumes()) {
+                        String autoresString = null;
+                        if(volume.getAutores() != null) {
+                            autoresString = String.join(", ", volume.getAutores());
+                        } else {
+                            autoresString = "Autores não definidos";
+                        }
+
+                        String isbn_10 = null;
+                        String isbn_13 = null;
+
+                        for (IsbnDTO isbn: volume.getIdentificador()) {
+                            if(isbn.getTipo().equals("ISBN_10")) {
+                                isbn_10 = isbn.getNumeroISBN();
+                            } else if(isbn.getTipo().equals("ISBN_13")) {
+                                isbn_13 = isbn.getNumeroISBN();
+                            }
+                        }
+
+                        items.add(new SelectableCardsAdapter.Item(volume.getTitulo(), autoresString, isbn_10, isbn_13));
+                    }
+
+                    CardUtils.getAdapter().setItems(items);
+
+                    CardUtils.getRecyclerView().setAdapter(CardUtils.getAdapter());
+                }
+            });
         });
     }
 
-    private static void executeInBackground(final ViewGroup suggestionContainer, final SearchBar searchBar, final SearchView searchView, final String query) {
+    private static ListVolumeDTO executeInBackground(final ViewGroup suggestionContainer, final SearchBar searchBar, final SearchView searchView, final String query) {
         ReturnDTO<ListVolumeDTO> resutadoBusca = Service.buscarVolume(query);
 
         assert resutadoBusca != null;
@@ -236,6 +277,8 @@ public final class SearchUtils {
                 addSuggestionItemView(suggestionContainer, suggestionItems, searchBar, searchView);
             }
         });
+
+        return resutadoBusca.getRetorno();
     }
 
     public static CircularProgressIndicator getProgressIndicator() {

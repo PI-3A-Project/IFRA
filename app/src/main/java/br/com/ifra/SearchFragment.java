@@ -10,11 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.search.SearchBar;
 import com.google.android.material.search.SearchView;
 
+import br.com.ifra.card.CardUtils;
 import br.com.ifra.search.ProgressoBusca;
 import br.com.ifra.search.SearchUtils;
 
@@ -36,10 +38,14 @@ public class SearchFragment extends Fragment {
         SearchBar searchBar = view.findViewById(R.id.cat_search_bar);
         SearchView searchView = view.findViewById(R.id.cat_search_view);
         LinearLayout suggestionContainer = view.findViewById(R.id.cat_search_view_suggestion_container);
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
 
         SearchUtils.setUpSearchBar(getActivity(), searchBar);
         SearchUtils.setUpSearchView(suggestionContainer, (AppCompatActivity) getActivity(), searchBar, searchView);
         SearchUtils.setUpSuggestions(suggestionContainer, searchBar, searchView);
         SearchUtils.startOnLoadAnimation(searchBar, savedInstanceState);
+
+        CardUtils.setRecyclerView(recyclerView);
+        CardUtils.setUpRecyclerView(getActivity());
     }
 }
