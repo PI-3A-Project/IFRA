@@ -28,6 +28,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -35,6 +36,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.chip.Chip;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.search.SearchBar;
 import com.google.android.material.search.SearchView;
@@ -77,10 +79,20 @@ public final class SearchUtils {
                 });
     }
 
+    private String originalSearchText = "";
+
     public static void setUpSearchView(@NonNull ViewGroup suggestionContainer,
                                        @NonNull AppCompatActivity activity,
                                        @NonNull SearchBar searchBar,
-                                       @NonNull SearchView searchView) {
+                                       @NonNull SearchView searchView,
+                                       @NonNull Chip intitle,
+                                       @NonNull Chip inauthor,
+                                       @NonNull Chip inpublisher,
+                                       @NonNull Chip subject,
+                                       @NonNull Chip isbn,
+                                       @NonNull Chip lccn,
+                                       @NonNull Chip oclc
+    ) {
         searchView.inflateMenu(R.menu.cat_searchview_menu);
         searchView.setOnMenuItemClickListener(
                 menuItem -> {
@@ -92,7 +104,7 @@ public final class SearchUtils {
                 .setOnEditorActionListener(
                         (v, actionId, event) -> {
                             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                                submitSearchQuery(suggestionContainer, searchBar, searchView, searchView.getText().toString());
+                                submitSearchQuery(suggestionContainer, searchBar, searchView, buildQueryString(searchView.getText().toString(), intitle.isChecked(), inauthor.isChecked(), inpublisher.isChecked(), subject.isChecked(), isbn.isChecked(), lccn.isChecked(), oclc.isChecked()));
                                 return true;
                             }
                             return false;
@@ -117,7 +129,87 @@ public final class SearchUtils {
                         setStatusBarColor(activity, suggestionContainerColor);
                     }
                 });
+
+        // Listener para o Chip intitle
+        intitle.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            // Reagir à mudança de estado do Chip intitle
+            updateSearchQuery(suggestionContainer, searchBar, searchView, searchView.getText().toString(), intitle.isChecked(), inauthor.isChecked(), inpublisher.isChecked(), subject.isChecked(), isbn.isChecked(), lccn.isChecked(), oclc.isChecked());
+        });
+
+        // Listener para o Chip inauthor
+        inauthor.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            // Reagir à mudança de estado do Chip inauthor
+            updateSearchQuery(suggestionContainer, searchBar, searchView, searchView.getText().toString(), intitle.isChecked(), inauthor.isChecked(), inpublisher.isChecked(), subject.isChecked(), isbn.isChecked(), lccn.isChecked(), oclc.isChecked());
+        });
+
+        // Listener para o Chip inpublisher
+        inpublisher.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            // Reagir à mudança de estado do Chip inpublisher
+            updateSearchQuery(suggestionContainer, searchBar, searchView, searchView.getText().toString(), intitle.isChecked(), inauthor.isChecked(), inpublisher.isChecked(), subject.isChecked(), isbn.isChecked(), lccn.isChecked(), oclc.isChecked());
+        });
+
+        // Listener para o Chip subject
+        subject.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            // Reagir à mudança de estado do Chip subject
+            updateSearchQuery(suggestionContainer, searchBar, searchView, searchView.getText().toString(), intitle.isChecked(), inauthor.isChecked(), inpublisher.isChecked(), subject.isChecked(), isbn.isChecked(), lccn.isChecked(), oclc.isChecked());
+        });
+
+        // Listener para o Chip isbn
+        isbn.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            // Reagir à mudança de estado do Chip isbn
+            updateSearchQuery(suggestionContainer, searchBar, searchView, searchView.getText().toString(), intitle.isChecked(), inauthor.isChecked(), inpublisher.isChecked(), subject.isChecked(), isbn.isChecked(), lccn.isChecked(), oclc.isChecked());
+        });
+
+        // Listener para o Chip lccn
+        lccn.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            // Reagir à mudança de estado do Chip lccn
+            updateSearchQuery(suggestionContainer, searchBar, searchView, searchView.getText().toString(), intitle.isChecked(), inauthor.isChecked(), inpublisher.isChecked(), subject.isChecked(), isbn.isChecked(), lccn.isChecked(), oclc.isChecked());
+        });
+
+        // Listener para o Chip oclc
+        oclc.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            // Reagir à mudança de estado do Chip oclc
+            updateSearchQuery(suggestionContainer, searchBar, searchView, searchView.getText().toString(), intitle.isChecked(), inauthor.isChecked(), inpublisher.isChecked(), subject.isChecked(), isbn.isChecked(), lccn.isChecked(), oclc.isChecked());
+        });
     }
+
+    private static void updateSearchQuery(ViewGroup suggestionContainer, SearchBar searchBar, SearchView searchView, String searchText, boolean intitleChecked, boolean inauthorChecked, boolean inpublisherChecked, boolean subjectChecked, boolean isbnChecked, boolean lccnChecked, boolean oclcChecked) {
+        String query = buildQueryString(searchText, intitleChecked, inauthorChecked, inpublisherChecked, subjectChecked, isbnChecked, lccnChecked, oclcChecked);
+        submitSearchQuery(suggestionContainer, searchBar, searchView, query);
+    }
+
+    private static String buildQueryString(String searchText, boolean intitleChecked, boolean inauthorChecked, boolean inpublisherChecked, boolean subjectChecked, boolean isbnChecked, boolean lccnChecked, boolean oclcChecked) {
+        StringBuilder queryBuilder = new StringBuilder();
+
+        // Adicionar o texto de busca principal
+        queryBuilder.append(searchText);
+
+        // Adicionar os filtros apenas se estiverem marcados
+        if (intitleChecked) {
+            queryBuilder.append("+intitle:").append(searchText);
+        }
+        if (inauthorChecked) {
+            queryBuilder.append("+inauthor:").append(searchText);
+        }
+        if (inpublisherChecked) {
+            queryBuilder.append("+inpublisher:").append(searchText);
+        }
+        if (subjectChecked) {
+            queryBuilder.append("+subject:").append(searchText);
+        }
+        if (isbnChecked) {
+            queryBuilder.append("+isbn:").append(searchText);
+        }
+        if (lccnChecked) {
+            queryBuilder.append("+lccn:").append(searchText);
+        }
+        if (oclcChecked) {
+            queryBuilder.append("+oclc:").append(searchText);
+        }
+
+        return queryBuilder.toString();
+    }
+
 
     public static void showSnackbar(@NonNull Activity activity, @NonNull MenuItem menuItem) {
         Snackbar.make(
@@ -167,16 +259,20 @@ public final class SearchUtils {
 
     private static void addSuggestionItemView(
             ViewGroup parent, SuggestionItem suggestionItem, SearchBar searchBar, SearchView searchView) {
-        View view =
-                LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.cat_search_suggestion_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.cat_search_suggestion_item, parent, false);
 
         List<String> recentes = printSuggestionItemValues(parent);
 
-        if (recentes.contains(suggestionItem.getTitle())) {
+        // Verifica se o título contém "+", e se sim, pega somente a parte anterior ao primeiro "+"
+        String titleWithoutPlus = suggestionItem.getTitle().split("\\+")[0].trim();
+
+        // Verifica se já existe um item com o título sem considerar o que vem após o "+"
+        if (recentes.contains(titleWithoutPlus)) {
             return;
         }
 
+        // Verifica se já existe um item com o título completo na lista de sugestões
         if (suggestionItems.stream().noneMatch(item -> item.getTitle().equals(suggestionItem.getTitle()))) {
             suggestionItems.add(suggestionItem);
         }
@@ -185,9 +281,9 @@ public final class SearchUtils {
         TextView titleView = view.findViewById(R.id.cat_searchbar_suggestion_title);
 
         iconView.setImageResource(suggestionItem.getIconResId());
-        titleView.setText(suggestionItem.getTitle());
+        titleView.setText(titleWithoutPlus); // Define o título sem considerar o que vem após o "+"
 
-        view.setOnClickListener(v -> submitSearchQuery(parent, searchBar, searchView, suggestionItem.getTitle()));
+        view.setOnClickListener(v -> submitSearchQuery(parent, searchBar, searchView, titleWithoutPlus));
 
         if (parent.getChildCount() > 5) {
             parent.removeViewAt(parent.getChildCount() - 1);
@@ -199,6 +295,7 @@ public final class SearchUtils {
         }
         parent.addView(view, 1);
     }
+
 
     private static List<String> printSuggestionItemValues(ViewGroup parent) {
         List<String> recentes = new ArrayList<>();
@@ -278,9 +375,11 @@ public final class SearchUtils {
                     CardUtils.getRecyclerView().setAdapter(CardUtils.getAdapter());
                 }
             });
-
-            ProgressoBusca.gone();
         });
+        if (query.contains("+")) {
+            String primeiraPalavra = query.substring(0, query.indexOf("+"));
+            searchBar.setText(primeiraPalavra);
+        }
     }
 
     private static ListVolumeDTO executeInBackground(final ViewGroup suggestionContainer, final SearchBar searchBar, final SearchView searchView, final String query) {

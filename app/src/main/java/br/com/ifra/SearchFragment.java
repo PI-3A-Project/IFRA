@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.chip.Chip;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.search.SearchBar;
 import com.google.android.material.search.SearchView;
@@ -40,8 +41,29 @@ public class SearchFragment extends Fragment {
         LinearLayout suggestionContainer = view.findViewById(R.id.cat_search_view_suggestion_container);
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
 
+        Chip intitle = view.findViewById(R.id.intitle);
+        Chip inauthor = view.findViewById(R.id.inauthor);
+        Chip inpublisher = view.findViewById(R.id.inpublisher);
+        Chip subject = view.findViewById(R.id.subject);
+        Chip isbn = view.findViewById(R.id.isbn);
+        Chip lccn = view.findViewById(R.id.lccn);
+        Chip oclc = view.findViewById(R.id.oclc);
+
+
         SearchUtils.setUpSearchBar(getActivity(), searchBar);
-        SearchUtils.setUpSearchView(suggestionContainer, (AppCompatActivity) getActivity(), searchBar, searchView);
+        SearchUtils.setUpSearchView(
+                suggestionContainer,
+                (AppCompatActivity) getActivity(),
+                searchBar,
+                searchView,
+                intitle,
+                inauthor,
+                inpublisher,
+                subject,
+                isbn,
+                lccn,
+                oclc
+        );
         SearchUtils.setUpSuggestions(suggestionContainer, searchBar, searchView);
         SearchUtils.startOnLoadAnimation(searchBar, savedInstanceState);
 
