@@ -34,6 +34,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.search.SearchBar;
 import com.google.android.material.search.SearchView;
@@ -225,7 +226,6 @@ public final class SearchUtils {
         ProgressoBusca.visivel();
         executorService.execute(() -> {
             listaVolumes = executeInBackground(suggestionContainer, searchBar, searchView, query);
-            ProgressoBusca.gone();
 
             mainHandler.post(() -> {
                 if (listaVolumes != null && listaVolumes.getListaVolumes() != null && !listaVolumes.getListaVolumes().isEmpty()) {
@@ -235,7 +235,7 @@ public final class SearchUtils {
 
                     for (VolumeDTO volume : listaVolumes.getListaVolumes()) {
                         String autoresString = null;
-                        if(volume.getAutores() != null) {
+                        if (volume.getAutores() != null) {
                             autoresString = String.join(", ", volume.getAutores());
                         } else {
                             autoresString = "Autores não definidos";
@@ -243,16 +243,21 @@ public final class SearchUtils {
 
                         String isbn_10 = null;
                         String isbn_13 = null;
+                        String linkImg = null;
+                        if (volume.getLinks() != null)
+                            linkImg = volume.getLinks().getImagemLink();
 
-                        for (IsbnDTO isbn: volume.getIdentificador()) {
-                            if(isbn.getTipo().equals("ISBN_10")) {
+                        for (IsbnDTO isbn : volume.getIdentificador()) {
+                            if (isbn.getTipo().equals("ISBN_10")) {
                                 isbn_10 = isbn.getNumeroISBN();
-                            } else if(isbn.getTipo().equals("ISBN_13")) {
+                            } else if (isbn.getTipo().equals("ISBN_13")) {
                                 isbn_13 = isbn.getNumeroISBN();
                             }
                         }
 
-                        items.add(new SelectableCardsAdapter.Item(volume.getTitulo(), autoresString, isbn_10, isbn_13));
+                        if (isbn_10 != null || isbn_13 != null) {
+                            items.add(new SelectableCardsAdapter.Item(volume.getTitulo(), autoresString, isbn_10, isbn_13, linkImg));
+                        }
                     }
 
                     CardUtils.getAdapter().setItems(items);
@@ -260,6 +265,8 @@ public final class SearchUtils {
                     CardUtils.getRecyclerView().setAdapter(CardUtils.getAdapter());
                 }
             });
+
+            ProgressoBusca.gone();
         });
     }
 
