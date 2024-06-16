@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   Copyright 2019 The Android Open Source Project
 
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,41 +15,45 @@
   limitations under the License.
   -->
 
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/item_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="16dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginRight="16dp"
-    android:checkable="true"
-    android:clickable="true"
-    android:focusable="true"
-    app:contentPadding="@dimen/cat_card_content_padding"
-    app:contentPaddingTop="5dp"
-    app:contentPaddingBottom="5dp"
-    app:strokeWidth="0dp">
+    android:orientation="vertical">
 
-    <LinearLayout
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/item_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginLeft="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="0dp"
+        android:checkable="true"
+        android:clickable="true"
+        android:focusable="true"
+        app:contentPadding="16dp"
+        app:contentPaddingTop="10dp"
+        app:contentPaddingBottom="10dp"
+        app:strokeWidth="0dp"
+        app:cardCornerRadius="0dp">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
 
             <ImageView
                 android:id="@+id/cat_card_image"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:scaleType="centerCrop" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
@@ -58,7 +63,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="3dp"
                     android:text="Sistemas Operacionais com Java"
-                    android:textAppearance="?attr/textAppearanceBodyLarge" />
+                    android:textAppearance="?attr/textAppearanceBodyLarge"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/cat_card_autores"
@@ -82,16 +88,13 @@
                     android:text="ISBN-13 : 85222222222"
                     android:textAppearance="?attr/textAppearanceCaption" />
             </LinearLayout>
-
-
         </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_marginTop="12dp"
-            android:layout_height="wrap_content"
-            app:dividerColor="@color/cardview_dark_background" />
-    </LinearLayout>
+    <com.google.android.material.divider.MaterialDivider
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:dividerColor="@color/md_theme_surfaceContainerHigh" />
 
-
-</com.google.android.material.card.MaterialCardView>
+</LinearLayout>

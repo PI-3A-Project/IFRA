@@ -45,7 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        app:statusBarForeground="?attr/colorSurface">
+        app:statusBarForeground="@color/md_theme_background">
 
         <com.google.android.material.search.SearchBar
             android:id="@+id/cat_search_bar"
