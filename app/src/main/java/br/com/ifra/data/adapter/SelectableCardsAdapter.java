@@ -48,12 +48,25 @@ import br.com.ifra.interfaces.AlternateFragment;
 public class SelectableCardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Item> items;
+
+    private static List<Item> favoritos = new ArrayList<>();
     private SelectionTracker<Long> selectionTracker;
     private AlternateFragment listener;
 
     public SelectableCardsAdapter(AlternateFragment listener) {
         this.listener = listener;
         this.items = new ArrayList<>();
+    }
+
+    public static List<Item> getFavoritosStatic() {
+        return favoritos;
+    }
+
+    public void addToFavoritos(Item item) {
+        if (!favoritos.contains(item)) {
+            favoritos.add(item);
+            notifyDataSetChanged(); // Atualiza a UI para refletir a mudança
+        }
     }
 
     public List<Item> getItems() {

@@ -14,9 +14,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.Serializable;
 
@@ -29,6 +31,8 @@ import br.com.ifra.data.adapter.SelectableCardsAdapter;
 public class CardSelectFragment extends Fragment {
 
     SelectableCardsAdapter.Item item;
+    private SelectableCardsAdapter adapter; // Adicione esta linha
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,5 +87,20 @@ public class CardSelectFragment extends Fragment {
                 }
             }
         });
+        FloatingActionButton fab = view.findViewById(R.id.floating_action_button);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Adiciona o item aos favoritos
+                if (adapter != null && item != null) {
+                    adapter.addToFavoritos(item);
+                    Toast.makeText(getActivity(), "Item adicionado aos favoritos!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        if (adapter == null) {
+            adapter = new SelectableCardsAdapter(null);
+        }
+
     }
 }
