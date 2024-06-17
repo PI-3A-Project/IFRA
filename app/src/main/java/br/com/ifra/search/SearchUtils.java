@@ -105,6 +105,7 @@ public final class SearchUtils {
                         (v, actionId, event) -> {
                             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                                 submitSearchQuery(suggestionContainer, searchBar, searchView, buildQueryString(searchView.getText().toString(), intitle.isChecked(), inauthor.isChecked(), inpublisher.isChecked(), subject.isChecked(), isbn.isChecked(), lccn.isChecked(), oclc.isChecked()));
+                                //disableChips(intitle, inauthor, inpublisher, subject, isbn, lccn, oclc);
                                 return true;
                             }
                             return false;
@@ -175,7 +176,6 @@ public final class SearchUtils {
 
     private static void updateSearchQuery(ViewGroup suggestionContainer, SearchBar searchBar, SearchView searchView, String searchText, boolean intitleChecked, boolean inauthorChecked, boolean inpublisherChecked, boolean subjectChecked, boolean isbnChecked, boolean lccnChecked, boolean oclcChecked) {
         String query = buildQueryString(searchText, intitleChecked, inauthorChecked, inpublisherChecked, subjectChecked, isbnChecked, lccnChecked, oclcChecked);
-        submitSearchQuery(suggestionContainer, searchBar, searchView, query);
     }
 
     private static String buildQueryString(String searchText, boolean intitleChecked, boolean inauthorChecked, boolean inpublisherChecked, boolean subjectChecked, boolean isbnChecked, boolean lccnChecked, boolean oclcChecked) {
@@ -327,6 +327,12 @@ public final class SearchUtils {
     private static ListVolumeDTO listaVolumes;
 
     private static void submitSearchQuery(ViewGroup suggestionContainer, SearchBar searchBar, SearchView searchView, String query) {
+        // Verifica se a query está nula ou vazia
+        if (query == null || query.isEmpty()) {
+            searchView.hide();
+            return;
+        }
+
         searchBar.setText(query);
         searchView.hide();
         ProgressoBusca.visivel();
@@ -380,6 +386,22 @@ public final class SearchUtils {
             String primeiraPalavra = query.substring(0, query.indexOf("+"));
             searchBar.setText(primeiraPalavra);
         }
+    }
+
+    public static void disableChips(Chip intitle,
+                                    Chip inauthor,
+                                    Chip inpublisher,
+                                    Chip subject,
+                                    Chip isbn,
+                                    Chip lccn,
+                                    Chip oclc) {
+        intitle.setChecked(false);
+        inauthor.setChecked(false);
+        inpublisher.setChecked(false);
+        subject.setChecked(false);
+        isbn.setChecked(false);
+        lccn.setChecked(false);
+        oclc.setChecked(false);
     }
 
     private static ListVolumeDTO executeInBackground(final ViewGroup suggestionContainer, final SearchBar searchBar, final SearchView searchView, final String query) {
