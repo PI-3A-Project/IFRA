@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -259,6 +260,7 @@ public final class SearchUtils {
 
     private static void addSuggestionItemView(
             ViewGroup parent, SuggestionItem suggestionItem, SearchBar searchBar, SearchView searchView) {
+
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.cat_search_suggestion_item, parent, false);
 
@@ -268,7 +270,7 @@ public final class SearchUtils {
         String titleWithoutPlus = suggestionItem.getTitle().split("\\+")[0].trim();
 
         // Verifica se já existe um item com o título sem considerar o que vem após o "+"
-        if (recentes.contains(titleWithoutPlus)) {
+        if (recentes.contains(titleWithoutPlus) || TextUtils.isEmpty(titleWithoutPlus)) {
             return;
         }
 
@@ -295,6 +297,7 @@ public final class SearchUtils {
         }
         parent.addView(view, 1);
     }
+
 
 
     private static List<String> printSuggestionItemValues(ViewGroup parent) {
