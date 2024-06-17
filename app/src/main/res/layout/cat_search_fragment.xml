@@ -53,7 +53,8 @@
             android:id="@+id/cat_search_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/cat_searchbar_hint" />
+            android:hint="@string/cat_searchbar_hint"
+            app:elevation="8dp"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.search.SearchView
