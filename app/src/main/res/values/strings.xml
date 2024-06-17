@@ -61,8 +61,6 @@
     <string name="cat_searchbar_hide_nav_drawer_content_description" description="Description about hide navigation drawer option.[CHAR_LIMIT=NONE]">Hide navigation drawer</string>
     <string name="cat_searchbar_nav_drawer_user" description="Label for username display text.[CHAR_LIMIT=NONE]">User</string>
     <string name="cat_searchbar_nav_drawer_email" translatable="false">jdoe@no.where</string>
-    <string description="A description of an action that a user of an accessibility service can perform to select the card. [CHAR LIMIT=25]"
-        name="cat_card_action_select">Select</string>
-    <string description="A description of an action that a user of an accessibility service can perform to deselect the card. [CHAR LIMIT=25]"
-        name="cat_card_action_deselect">Deselect</string>
+    <string name="cat_card_action_select" description="A description of an action that a user of an accessibility service can perform to select the card. [CHAR LIMIT=25]">Select</string>
+    <string name="cat_card_action_deselect" description="A description of an action that a user of an accessibility service can perform to deselect the card. [CHAR LIMIT=25]">Deselect</string>
 </resources>

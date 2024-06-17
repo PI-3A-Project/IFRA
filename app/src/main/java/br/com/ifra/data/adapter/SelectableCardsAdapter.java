@@ -16,8 +16,7 @@
 
 package br.com.ifra.data.adapter;
 
-import android.graphics.drawable.Drawable;
-import android.util.Log;
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,16 +33,14 @@ import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
 import com.google.android.material.card.MaterialCardView;
 
-import java.lang.annotation.Target;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.ifra.R;
+import br.com.ifra.interfaces.AlternateFragment;
 
 /**
  * An Adapter that works with a collection of selectable card items
@@ -51,11 +48,16 @@ import br.com.ifra.R;
 public class SelectableCardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Item> items;
-
     private SelectionTracker<Long> selectionTracker;
+    private AlternateFragment listener;
 
-    public SelectableCardsAdapter() {
+    public SelectableCardsAdapter(AlternateFragment listener) {
+        this.listener = listener;
         this.items = new ArrayList<>();
+    }
+
+    public List<Item> getItems() {
+        return items;
     }
 
     public void setItems(List<Item> items) {
@@ -76,7 +78,7 @@ public class SelectableCardsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.cat_card_item_view, parent, false);
-        return new ItemViewHolder(view);
+        return new ItemViewHolder(view, listener);
     }
 
     @Override
@@ -104,7 +106,7 @@ public class SelectableCardsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         private final TextView isbn_13View;
 
-        ItemViewHolder(View itemView) {
+        ItemViewHolder(View itemView, final AlternateFragment listener) {
             super(itemView);
             materialCardView = itemView.findViewById(R.id.item_card);
             imagemView = itemView.findViewById(R.id.cat_card_image);
@@ -112,6 +114,15 @@ public class SelectableCardsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             autoresView = itemView.findViewById(R.id.cat_card_autores);
             isbn_10View = itemView.findViewById(R.id.cat_card_isbn10);
             isbn_13View = itemView.findViewById(R.id.cat_card_isbn13);
+
+            materialCardView.setOnClickListener(v -> {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(position);
+                    }
+                }
+            });
             details = new Details();
         }
 
@@ -204,7 +215,7 @@ public class SelectableCardsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
     }
 
-    public static class Item {
+    public static class Item implements Serializable {
 
         private final String imagemUrl;
         private final String title;
@@ -213,12 +224,39 @@ public class SelectableCardsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         private final String isbn_10;
         private final String isbn_13;
 
-        public Item(String title, String autor, String isbn_10, String isbn_13, String imagemUrl) {
+        private final String detalhes;
+
+        public Item(String title, String autor, String isbn_10, String isbn_13, String imagemUrl, String detalhes) {
             this.title = title;
             this.autor = autor;
             this.isbn_10 = ("ISBN-10 : " + (isbn_10 != null ? isbn_10 : "---"));
             this.isbn_13 = ("ISBN-13 : " + (isbn_13 != null ? isbn_13 : "---"));
             this.imagemUrl = imagemUrl;
+            this.detalhes = detalhes;
+        }
+
+        public String getImagemUrl() {
+            return imagemUrl;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getAutor() {
+            return autor;
+        }
+
+        public String getIsbn_10() {
+            return isbn_10;
+        }
+
+        public String getIsbn_13() {
+            return isbn_13;
+        }
+
+        public String getDetalhes() {
+            return detalhes;
         }
     }
 
