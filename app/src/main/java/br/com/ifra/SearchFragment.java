@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,7 +41,12 @@ public class SearchFragment extends Fragment {
         SearchView searchView = view.findViewById(R.id.cat_search_view);
         LinearLayout suggestionContainer = view.findViewById(R.id.cat_search_view_suggestion_container);
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-
+        TextView titleRecycleView = view.findViewById(R.id.title_recycler_view);
+        if (SearchUtils.getTitleRecycleView() == null) {
+            SearchUtils.setTitleRecycleView(titleRecycleView);
+        } else {
+            titleRecycleView.setText(SearchUtils.getTitleRecycleView().getText());
+        }
         Chip intitle = view.findViewById(R.id.intitle);
         Chip inauthor = view.findViewById(R.id.inauthor);
         Chip inpublisher = view.findViewById(R.id.inpublisher);
@@ -48,7 +54,6 @@ public class SearchFragment extends Fragment {
         Chip isbn = view.findViewById(R.id.isbn);
         Chip lccn = view.findViewById(R.id.lccn);
         Chip oclc = view.findViewById(R.id.oclc);
-
 
         SearchUtils.setUpSearchBar(getActivity(), searchBar);
         SearchUtils.setUpSearchView(

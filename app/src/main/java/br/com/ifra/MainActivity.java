@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements AlternateFragment
         booksFragment = new BooksFragment();
         cardSelectFragment = new CardSelectFragment();
 
-        CardUtils.setAlternate(this);
+        SelectableCardsAdapter.setListener(this);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             int itemId = item.getItemId();

@@ -299,7 +299,6 @@ public final class SearchUtils {
     }
 
 
-
     private static List<String> printSuggestionItemValues(ViewGroup parent) {
         List<String> recentes = new ArrayList<>();
         int childCount = parent.getChildCount();
@@ -329,6 +328,8 @@ public final class SearchUtils {
 
     private static ListVolumeDTO listaVolumes;
 
+    private static TextView titleRecycleView;
+
     private static void submitSearchQuery(ViewGroup suggestionContainer, SearchBar searchBar, SearchView searchView, String query) {
         // Verifica se a query está nula ou vazia
         if (query == null || query.isEmpty()) {
@@ -336,7 +337,9 @@ public final class SearchUtils {
             return;
         }
 
-        searchBar.setText(query);
+        CardUtils.getAdapter().getItems().clear();
+        CardUtils.getRecyclerView().setAdapter(CardUtils.getAdapter());
+
         searchView.hide();
         ProgressoBusca.visivel();
         executorService.execute(() -> {
@@ -349,7 +352,7 @@ public final class SearchUtils {
 
 
                     for (VolumeDTO volume : listaVolumes.getListaVolumes()) {
-                        if(volume.getIdentificador() == null) {
+                        if (volume.getIdentificador() == null) {
                             continue;
                         }
                         String autoresString = null;
@@ -380,9 +383,12 @@ public final class SearchUtils {
                     }
 
                     CardUtils.getAdapter().setItems(items);
-
                     CardUtils.getRecyclerView().setAdapter(CardUtils.getAdapter());
+                    titleRecycleView.setText("Resultados");
+                } else {
+                    titleRecycleView.setText("Nenhum resultado encontrado");
                 }
+                ProgressoBusca.gone();
             });
         });
         if (query.contains("+")) {
@@ -412,7 +418,7 @@ public final class SearchUtils {
 
         assert resutadoBusca != null;
         mainHandler.post(() -> {
-            if (resutadoBusca.isSucesso()) {
+            if (resutadoBusca.isSucesso() && resutadoBusca.getRetorno() != null && resutadoBusca.getRetorno().getListaVolumes() != null && !resutadoBusca.getRetorno().getListaVolumes().isEmpty()) {
                 SuggestionItem suggestionItems =
                         new SuggestionItem(
                                 R.drawable.ic_schedule_vd_theme_24,
@@ -431,5 +437,13 @@ public final class SearchUtils {
 
     public static void setProgressIndicator(CircularProgressIndicator progressIndicator) {
         SearchUtils.progressIndicator = progressIndicator;
+    }
+
+    public static TextView getTitleRecycleView() {
+        return titleRecycleView;
+    }
+
+    public static void setTitleRecycleView(TextView titleRecycleView) {
+        SearchUtils.titleRecycleView = titleRecycleView;
     }
 }

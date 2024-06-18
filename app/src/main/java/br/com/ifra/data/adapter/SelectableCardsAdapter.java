@@ -51,10 +51,9 @@ public class SelectableCardsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     private static List<Item> favoritos = new ArrayList<>();
     private SelectionTracker<Long> selectionTracker;
-    private AlternateFragment listener;
+    private static AlternateFragment listener;
 
-    public SelectableCardsAdapter(AlternateFragment listener) {
-        this.listener = listener;
+    public SelectableCardsAdapter() {
         this.items = new ArrayList<>();
     }
 
@@ -84,6 +83,14 @@ public class SelectableCardsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     public void setSelectionTracker(SelectionTracker<Long> selectionTracker) {
         this.selectionTracker = selectionTracker;
+    }
+
+    public static AlternateFragment getListener() {
+        return listener;
+    }
+
+    public static void setListener(AlternateFragment listener) {
+        SelectableCardsAdapter.listener = listener;
     }
 
     @NonNull

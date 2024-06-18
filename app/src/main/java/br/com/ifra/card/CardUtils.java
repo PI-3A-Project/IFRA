@@ -23,14 +23,12 @@ import br.com.ifra.interfaces.AlternateFragment;
 public class CardUtils {
     private static SelectableCardsAdapter adapter;
     private static SelectionTracker<Long> selectionTracker;
-
     private static RecyclerView recyclerView;
 
-    private static AlternateFragment alternate;
-
     public static void setUpRecyclerView(Activity activity) {
-        if (adapter == null)
-            adapter = new SelectableCardsAdapter(alternate);
+        if (adapter == null) {
+            adapter = new SelectableCardsAdapter();
+        }
         recyclerView.setAdapter(adapter);
 
         if (selectionTracker == null) {
@@ -75,13 +73,5 @@ public class CardUtils {
 
     public static void setRecyclerView(RecyclerView recyclerView) {
         CardUtils.recyclerView = recyclerView;
-    }
-
-    public static AlternateFragment getAlternate() {
-        return alternate;
-    }
-
-    public static void setAlternate(AlternateFragment alternate) {
-        CardUtils.alternate = alternate;
     }
 }

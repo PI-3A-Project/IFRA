@@ -44,7 +44,7 @@ public class BooksFragment extends Fragment {
 
         // Inicializa o adaptador com a lista de favoritos
         List<SelectableCardsAdapter.Item> favoritos = getFavoritos();
-        adapter = new SelectableCardsAdapter(null);  // Passa null se não houver listener
+        adapter = new SelectableCardsAdapter();  // Passa null se não houver listener
         adapter.setItems(favoritos);
 
         recyclerView.setAdapter(adapter);

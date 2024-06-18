@@ -99,7 +99,7 @@ public class CardSelectFragment extends Fragment {
             }
         });
         if (adapter == null) {
-            adapter = new SelectableCardsAdapter(null);
+            adapter = new SelectableCardsAdapter();
         }
 
     }
