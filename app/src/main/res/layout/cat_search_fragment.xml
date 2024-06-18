@@ -35,22 +35,20 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/title_recycler_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_marginLeft="18dp"
+                android:textSize="14sp"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:paddingTop="@dimen/content_padding_top" />
+                android:clipToPadding="false"/>
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
@@ -60,14 +58,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        app:statusBarForeground="@color/md_theme_background">
+        app:statusBarForeground="@color/md_theme_background"
+        app:liftOnScrollColor="@color/md_theme_background"
+        android:outlineAmbientShadowColor="@color/md_theme_primary"
+        app:elevation="10dp">
 
         <com.google.android.material.search.SearchBar
             android:id="@+id/cat_search_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/cat_searchbar_hint"
-            app:elevation="8dp" />
+            app:elevation="8dp"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.search.SearchView
@@ -177,6 +178,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"></LinearLayout>
+
 
             </ScrollView>
         </LinearLayout>

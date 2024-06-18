@@ -1,9 +1,12 @@
 package br.com.ifra;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.search.SearchBar;
 import com.google.android.material.search.SearchView;
@@ -47,6 +51,7 @@ public class SearchFragment extends Fragment {
         } else {
             titleRecycleView.setText(SearchUtils.getTitleRecycleView().getText());
         }
+        Chip advanced = view.findViewById(R.id.advanced);
         Chip intitle = view.findViewById(R.id.intitle);
         Chip inauthor = view.findViewById(R.id.inauthor);
         Chip inpublisher = view.findViewById(R.id.inpublisher);
@@ -55,12 +60,14 @@ public class SearchFragment extends Fragment {
         Chip lccn = view.findViewById(R.id.lccn);
         Chip oclc = view.findViewById(R.id.oclc);
 
+
         SearchUtils.setUpSearchBar(getActivity(), searchBar);
         SearchUtils.setUpSearchView(
                 suggestionContainer,
                 (AppCompatActivity) getActivity(),
                 searchBar,
                 searchView,
+                advanced,
                 intitle,
                 inauthor,
                 inpublisher,

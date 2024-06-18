@@ -11,6 +11,8 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -48,7 +50,16 @@ public class CardSelectFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.cat_fragment_card_select, container, false);
+        // Inflar o layout do fragmento
+        View view = inflater.inflate(R.layout.cat_fragment_card_select, container, false);
+
+        // Carregar a animação de entrada
+        Animation animacaoEntrada = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_left);
+        view.startAnimation(animacaoEntrada);
+
+        // Configurar o resto do seu fragmento
+
+        return view;
     }
 
     @Override

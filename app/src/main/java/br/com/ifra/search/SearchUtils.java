@@ -17,16 +17,22 @@
 package br.com.ifra.search;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.inputmethod.EditorInfo;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,7 +42,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.search.SearchBar;
@@ -86,6 +94,7 @@ public final class SearchUtils {
                                        @NonNull AppCompatActivity activity,
                                        @NonNull SearchBar searchBar,
                                        @NonNull SearchView searchView,
+                                       @NonNull Chip advanced,
                                        @NonNull Chip intitle,
                                        @NonNull Chip inauthor,
                                        @NonNull Chip inpublisher,
@@ -131,6 +140,27 @@ public final class SearchUtils {
                         setStatusBarColor(activity, suggestionContainerColor);
                     }
                 });
+
+
+        // Listener para o Chip advanced
+        advanced.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(searchView.getContext());
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.dialog_bottom_sheet_filters);
+
+                // Set any necessary dialog properties here, such as onClickListeners for buttons
+
+                dialog.show();
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                //dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+                dialog.getWindow().setGravity(Gravity.BOTTOM);
+                //Toast.makeText(activity, "BottomSheetBehavior not initialized!", Toast.LENGTH_SHORT).show();
+
+            }
+        });
 
         // Listener para o Chip intitle
         intitle.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -331,6 +361,7 @@ public final class SearchUtils {
     private static TextView titleRecycleView;
 
     private static void submitSearchQuery(ViewGroup suggestionContainer, SearchBar searchBar, SearchView searchView, String query) {
+        titleRecycleView.setText(" ");
         // Verifica se a query está nula ou vazia
         if (query == null || query.isEmpty()) {
             searchView.hide();
