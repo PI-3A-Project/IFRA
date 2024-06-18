@@ -409,7 +409,19 @@ public final class SearchUtils {
                         }
 
                         if (isbn_10 != null || isbn_13 != null) {
-                            items.add(new SelectableCardsAdapter.Item(volume.getTitulo(), autoresString, isbn_10, isbn_13, linkImg, volume.getDescricao()));
+                            items.add(new SelectableCardsAdapter.Item(
+                                    volume.getTitulo(),
+                                    autoresString,
+                                    isbn_10,
+                                    isbn_13,
+                                    linkImg,
+                                    volume.getDescricao(),
+                                    volume.getDataPublicacao(),
+                                    volume.getEditora(),
+                                    volume.getPaginas(),
+                                    volume.getLingua(),
+                                    volume.getId()
+                            ));
                         }
                     }
 

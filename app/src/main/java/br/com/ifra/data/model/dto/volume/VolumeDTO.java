@@ -11,6 +11,10 @@ import br.com.ifra.data.adapter.FlatteningAdapterFactory;
 
 @JsonAdapter(FlatteningAdapterFactory.class)
 public class VolumeDTO extends BeanAbstrato {
+
+    @SerializedName(value = "id", alternate = {"volumeInfo.id"})
+    @Expose
+    private String id;
     @SerializedName(value = "titulo", alternate = {"volumeInfo.title"})
     @Expose
     private String titulo;
@@ -46,6 +50,18 @@ public class VolumeDTO extends BeanAbstrato {
     @SerializedName(value = "links", alternate = {"volumeInfo.imageLinks"})
     @Expose
     private LinksDTO links;
+
+    @SerializedName(value = "paginas", alternate = {"volumeInfo.pageCount"})
+    @Expose
+    private String paginas;
+
+    public String getId() {
+        return id;
+    }
+
+    public void SetId(String id) {
+        this.id = id;
+    }
 
     public String getTitulo() {
         return titulo;
@@ -117,5 +133,13 @@ public class VolumeDTO extends BeanAbstrato {
 
     public void setLinks(LinksDTO links) {
         this.links = links;
+    }
+
+    public String getPaginas() {
+        return paginas;
+    }
+
+    public void setPaginas(String paginas) {
+        this.paginas = paginas;
     }
 }

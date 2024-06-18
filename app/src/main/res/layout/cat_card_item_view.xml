@@ -76,7 +76,9 @@
                     android:layout_marginBottom="3dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:textAppearance="?attr/textAppearanceBodyLarge"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:maxLines="2"
+                    android:ellipsize="end" />
 
                 <TextView
                     android:id="@+id/cat_card_autores"
@@ -84,7 +86,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
                     android:textAppearance="?attr/textAppearanceBody2"
-                    android:fontFamily="@font/poppins_medium"/>
+                    android:fontFamily="@font/poppins_medium"
+                    android:maxLines="1"
+                    android:ellipsize="end" />
 
                 <TextView
                     android:id="@+id/cat_card_isbn10"

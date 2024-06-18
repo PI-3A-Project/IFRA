@@ -8,22 +8,22 @@
     tools:context=".CardSelectFragment">
 
     <!-- Botão de voltar -->
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_back"
-        style="@style/Widget.Material3.Button.ElevatedButton.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:textColorHint="@android:color/transparent"
-        app:icon="@drawable/baseline_arrow_back_24" />
+        android:layout_margin="16dp"
+        android:text="Voltar"
+        app:icon="@drawable/baseline_arrow_back_24"
+        app:iconGravity="textStart"
+        app:iconPadding="8dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating_action_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
+        android:layout_gravity="top|end"
         android:layout_margin="16dp"
-        android:backgroundTint="@color/design_default_color_error"
         app:srcCompat="@drawable/favorito"/>
 
     <!-- Conteúdo principal dentro de um LinearLayout vertical -->
@@ -32,9 +32,29 @@
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
         android:orientation="vertical"
-        android:padding="25dp"
-        android:paddingBottom="5dp">
+        android:paddingTop="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
 
+        <!-- Título do card -->
+        <TextView
+            android:id="@+id/cat_card_title_detalhes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Sistema de Banco de Dados"
+            android:textAppearance="?attr/textAppearanceBodyLarge"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        android:layout_marginStart="-6dp"
+        >
         <!-- CardView -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_detalhes"
@@ -42,7 +62,10 @@
             android:layout_width="128dp"
             android:layout_height="174dp"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
             app:cardCornerRadius="8dp"
             app:cardElevation="4dp">
 
@@ -61,17 +84,6 @@
             android:layout_marginTop="10dp"
             android:orientation="vertical"
             android:padding="5dp">
-
-            <!-- Título do card -->
-            <TextView
-                android:id="@+id/cat_card_title_detalhes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="3dp"
-                android:fontFamily="@font/poppins_semibold"
-                android:text="Sistema de Banco de Dados"
-                android:textAppearance="?attr/textAppearanceBodyLarge"
-                android:textStyle="bold" />
 
             <!-- Autores do card -->
             <TextView
@@ -100,7 +112,45 @@
                 android:fontFamily="@font/poppins_medium"
                 android:text="ISBN-13 : 22222222222222222"
                 android:textAppearance="?attr/textAppearanceCaption" />
+
+            <!-- Editora do card -->
+            <TextView
+                android:id="@+id/cat_card_editora_detalhes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Editora"
+                android:textAppearance="?attr/textAppearanceCaption" />
+
+            <!-- Idioma do card -->
+            <TextView
+                android:id="@+id/cat_card_idioma_detalhes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Idioma"
+                android:textAppearance="?attr/textAppearanceCaption" />
+
+            <!-- Paginas do card -->
+            <TextView
+                android:id="@+id/cat_card_paginas_detalhes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Paginas"
+                android:textAppearance="?attr/textAppearanceCaption" />
+
+            <!-- Ano do card -->
+            <TextView
+                android:id="@+id/cat_card_ano_detalhes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Ano"
+                android:textAppearance="?attr/textAppearanceCaption" />
+
         </LinearLayout>
+    </LinearLayout>
 
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
@@ -118,7 +168,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:padding="5dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:paddingBottom="5dp"
                 android:paddingTop="10dp">
 
                 <TextView
@@ -131,8 +183,8 @@
 
                 <TextView
                     android:id="@+id/detalhes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:fontFamily="@font/poppins_medium"
                     android:paddingTop="10dp"
                     android:text="asdlkghaasdgasdgasdgasdgasdgasdgasdgsdgasdgasdgasdgasdgasdasldjkghaswldjghdasdgasdgasdgasdgasdgsjdlghasdjkghasdfasdgaaskldjghaskjdhfaksjhfalksjdhfasjdhfasjldhfasjkdlfhaskjldfhaskjdfhaskdhjfghkh"

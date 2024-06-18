@@ -68,6 +68,13 @@ public class SelectableCardsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
     }
 
+    public void removeFromFavoritos(Item item) {
+        if (favoritos.contains(item)) {
+            favoritos.remove(item);
+            notifyDataSetChanged(); // Atualiza a UI para refletir a mudança
+        }
+    }
+
     public List<Item> getItems() {
         return items;
     }
@@ -134,6 +141,7 @@ public class SelectableCardsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             autoresView = itemView.findViewById(R.id.cat_card_autores);
             isbn_10View = itemView.findViewById(R.id.cat_card_isbn10);
             isbn_13View = itemView.findViewById(R.id.cat_card_isbn13);
+
 
             materialCardView.setOnClickListener(v -> {
                 if (listener != null) {
@@ -246,13 +254,42 @@ public class SelectableCardsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         private final String detalhes;
 
-        public Item(String title, String autor, String isbn_10, String isbn_13, String imagemUrl, String detalhes) {
+        private final String ano;
+        private final String publicadora;
+
+        private final String paginas;
+
+        private final String idioma;
+
+        private final String id;
+
+        public Item(
+                String title,
+                String autor,
+                String isbn_10,
+                String isbn_13,
+                String imagemUrl,
+                String detalhes,
+                String ano,
+                String publicadora,
+                String paginas,
+                String idioma,
+                String id) {
             this.title = title;
             this.autor = autor;
             this.isbn_10 = ("ISBN-10 : " + (isbn_10 != null ? isbn_10 : "---"));
             this.isbn_13 = ("ISBN-13 : " + (isbn_13 != null ? isbn_13 : "---"));
             this.imagemUrl = imagemUrl;
             this.detalhes = detalhes;
+            this.ano = ("Publicação : " + (ano != null ? ano : "---"));
+            this.publicadora = publicadora;
+            this.paginas = ("Páginas : " + paginas);
+            this.idioma = ("Idioma : " + idioma);
+            this.id = id;
+        }
+
+        public String getId() {
+            return id;
         }
 
         public String getImagemUrl() {
@@ -278,6 +315,14 @@ public class SelectableCardsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         public String getDetalhes() {
             return detalhes;
         }
+
+        public String getAno() { return ano; }
+
+        public String getPublicadora() { return publicadora;}
+
+        public String getPaginas() { return paginas;}
+
+        public String getIdioma() { return idioma;}
     }
 
     public static class Details extends ItemDetailsLookup.ItemDetails<Long> {
