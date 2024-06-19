@@ -16,7 +16,6 @@
 
 package br.com.ifra.data.adapter;
 
-import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -81,11 +80,6 @@ public class SelectableCardsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     public void setItems(List<Item> items) {
         this.items = items;
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return 0;
     }
 
     public void setSelectionTracker(SelectionTracker<Long> selectionTracker) {
@@ -341,11 +335,6 @@ public class SelectableCardsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         @Override
         public Long getSelectionKey() {
             return position;
-        }
-
-        @Override
-        public boolean inSelectionHotspot(@NonNull MotionEvent e) {
-            return false;
         }
 
         @Override

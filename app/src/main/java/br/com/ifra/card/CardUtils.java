@@ -25,6 +25,8 @@ public class CardUtils {
     private static SelectionTracker<Long> selectionTracker;
     private static RecyclerView recyclerView;
 
+    private static SelectableCardsAdapter.Item cardSelecionado;
+
     public static void setUpRecyclerView(Activity activity) {
         if (adapter == null) {
             adapter = new SelectableCardsAdapter();
@@ -73,5 +75,13 @@ public class CardUtils {
 
     public static void setRecyclerView(RecyclerView recyclerView) {
         CardUtils.recyclerView = recyclerView;
+    }
+
+    public static SelectableCardsAdapter.Item getCardSelecionado() {
+        return cardSelecionado;
+    }
+
+    public static void setCardSelecionado(SelectableCardsAdapter.Item cardSelecionado) {
+        CardUtils.cardSelecionado = cardSelecionado;
     }
 }

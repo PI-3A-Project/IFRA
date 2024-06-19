@@ -26,6 +26,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.Serializable;
 
+import br.com.ifra.card.CardUtils;
 import br.com.ifra.data.adapter.SelectableCardsAdapter;
 
 /**
@@ -34,7 +35,6 @@ import br.com.ifra.data.adapter.SelectableCardsAdapter;
  */
 public class CardSelectFragment extends Fragment {
 
-    SelectableCardsAdapter.Item item;
     private SelectableCardsAdapter adapter; // Adicione esta linha
 
     private boolean isFavorited = false;
@@ -43,13 +43,6 @@ public class CardSelectFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            Serializable serializable = getArguments().getSerializable("item_data");
-            if (serializable instanceof SelectableCardsAdapter.Item) {
-                item = (SelectableCardsAdapter.Item) serializable;
-            }
-        }
     }
 
     @Nullable
@@ -95,6 +88,8 @@ public class CardSelectFragment extends Fragment {
         TextView ano = view.findViewById(R.id.cat_card_ano_detalhes);
         Button btnBack = view.findViewById(R.id.btn_back);
 
+        SelectableCardsAdapter.Item item = CardUtils.getCardSelecionado();
+
         Glide.with(view.getContext())
                 .load(item.getImagemUrl())
                 .placeholder(R.drawable.baseline_call_to_action)
@@ -114,6 +109,7 @@ public class CardSelectFragment extends Fragment {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                CardUtils.setCardSelecionado(null);
                 FragmentManager fragmentManager = getParentFragmentManager();
                 if (fragmentManager.getBackStackEntryCount() > 0) {
                     fragmentManager.popBackStack();

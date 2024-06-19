@@ -44,11 +44,10 @@ public class MainActivity extends AppCompatActivity implements AlternateFragment
 
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             int itemId = item.getItemId();
-            if (itemId == R.id.search){
+            if (itemId == R.id.search) {
                 getSupportFragmentManager().beginTransaction().replace(idFrameLayout, searchFragment).commit();
                 return true;
-            }
-            else if (itemId == R.id.books){
+            } else if (itemId == R.id.books) {
                 getSupportFragmentManager().beginTransaction().replace(idFrameLayout, booksFragment).commit();
                 return true;
             }
@@ -65,9 +64,10 @@ public class MainActivity extends AppCompatActivity implements AlternateFragment
 
     @Override
     public void onItemClick(int position) {
-        if(CardUtils.getListaItens() != null && CardUtils.getListaItens().size() >= position) {
+        if (CardUtils.getListaItens() != null && CardUtils.getListaItens().size() >= position) {
             SelectableCardsAdapter.Item item = CardUtils.getListaItens().get(position);
 
+            CardUtils.setCardSelecionado(item);
             // Replace the fragment
             Bundle args = new Bundle();
             args.putSerializable("item_data", item); // Pass item data to the fragment if needed
